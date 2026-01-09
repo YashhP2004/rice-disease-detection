@@ -66,7 +66,7 @@ def main():
     # Inject Bot in Sidebar (at the bottom)
     with st.sidebar:
         st.markdown("---")
-        st.markdown("### 🤖 Agri Assistant")
+        # Header removed to avoid double-titles (Botpress has its own)
         from utils.bot import inject_bot
         inject_bot()
 
