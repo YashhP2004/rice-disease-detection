@@ -37,6 +37,12 @@ class DetectionPage(BasePage):
             # Display Image
             st.image(uploaded_file, caption="Uploaded Image", use_container_width=True)
             
+            # Use session_state to persist prediction results across reruns (e.g. when clicking download)
+            # We use the filename to ensure we clear results if a new file is uploaded
+            if 'last_uploaded_file' not in st.session_state or st.session_state.get('last_uploaded_file') != uploaded_file.name:
+                st.session_state.prediction_result = None
+                st.session_state.last_uploaded_file = uploaded_file.name
+
             # Predict Button
             if st.button("Predict Disease", disabled=(model is None)):
                 if model is None:
@@ -46,35 +52,47 @@ class DetectionPage(BasePage):
                         predicted_class, confidence = predict_image(model, uploaded_file, self.class_names)
                         
                         if predicted_class:
-                            st.success(f"Prediction: **{predicted_class}**")
-                            st.info(f"Confidence: **{confidence:.2f}%**")
-                            
-                            # Custom feedback based on disease
-                            if predicted_class == 'Healthy':
-                                st.balloons()
-                                st.markdown("### ✅ The plant looks healthy!")
-                            else:
-                                st.markdown(f"### ⚠️ Detected: {predicted_class}")
-                                st.markdown("Please consult an agricultural expert for treatment.")
-                            
-                            # PDF Report Generation
-                            st.markdown("---")
-                            st.write("### 📄 Report")
-                            
-                            # Convert uploaded file to PIL Image for the report generator
-                            # Seeking to 0 is important if the file has been read before
-                            uploaded_file.seek(0)
-                            image_pil = Image.open(uploaded_file)
-                            
-                            if st.button("Generate PDF Report"):
-                                with st.spinner("Generating PDF..."):
-                                    pdf_bytes = generate_pdf(image_pil, predicted_class, confidence)
-                                    
-                                    st.download_button(
-                                        label="⬇️ Download PDF Result",
-                                        data=pdf_bytes,
-                                        file_name="disease_report.pdf",
-                                        mime="application/pdf"
-                                    )
+                           st.session_state.prediction_result = {
+                               'class': predicted_class,
+                               'confidence': confidence
+                           }
                         else:
                             st.error("Could not make a prediction. Please try another image.")
+
+            # Display Results (Persistent Block)
+            if st.session_state.get('prediction_result'):
+                result = st.session_state.prediction_result
+                predicted_class = result['class']
+                confidence = result['confidence']
+
+                st.success(f"Prediction: **{predicted_class}**")
+                st.info(f"Confidence: **{confidence:.2f}%**")
+                
+                # Custom feedback based on disease
+                if predicted_class == 'Healthy':
+                    if 'balloons_shown' not in st.session_state or st.session_state.balloons_shown != uploaded_file.name:
+                         st.balloons()
+                         st.session_state.balloons_shown = uploaded_file.name
+                    st.markdown("### ✅ The plant looks healthy!")
+                else:
+                    st.markdown(f"### ⚠️ Detected: {predicted_class}")
+                    st.markdown("Please consult an agricultural expert for treatment.")
+                
+                # PDF Report Generation
+                st.markdown("---")
+                st.write("### 📄 Report")
+                
+                # Convert uploaded file to PIL Image for the report generator
+                uploaded_file.seek(0)
+                image_pil = Image.open(uploaded_file)
+                
+                # Direct download button (no intermediate "Generate" button needed)
+                # We generate the bytes on the fly for the current result
+                pdf_bytes = generate_pdf(image_pil, predicted_class, confidence)
+                
+                st.download_button(
+                    label="⬇️ Download PDF Result",
+                    data=pdf_bytes,
+                    file_name="disease_report.pdf",
+                    mime="application/pdf"
+                )
