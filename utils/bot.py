@@ -5,14 +5,9 @@ def inject_bot():
     Injects the Botpress Client Webchat script into the Streamlit app.
     Uses the specific IDs extracted from the user's configuration.
     """
-    bot_code = """
-    <script src="https://cdn.botpress.cloud/webchat/v2.1/inject.js"></script>
-    <script src="https://mediafiles.botpress.cloud/e7d1682e-a4a8-4721-87b8-fc9ab6f60952/webchat/v2.1/config.js"></script>
-    """
-    # Note: We use the hosted config.js based on the Bot ID as it ensures
-    # the bot stays updated when the user changes settings in Botpress Studio.
+    # Use the specific Shareable URL provided by the user.
+    # This renders the full chat interface immediately, which is better for sidebar usage
+    # than a floating bubble that might get clipped or hidden.
+    bot_url = "https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2026/01/08/13/20260108134110-VKCEHJIG.json"
     
-    # Render with sufficient height so the widget is visible.
-    # Since Streamlit runs components in an iframe, the floating bubble 
-    # needs space within that iframe to appear.
-    components.html(bot_code, height=500, scrolling=False)
+    components.iframe(bot_url, height=600)
