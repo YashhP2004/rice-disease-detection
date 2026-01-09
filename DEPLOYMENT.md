@@ -1,55 +1,37 @@
 # Deployment Guide: Rice & Pulse Disease Detection App
 
-This guide walks you through deploying your Streamlit application to the Streamlit Community Cloud.
+I have prepared your local environment for deployment. Follow these final steps to get your app live.
 
-## Prerequisites
+## Step 1: Create Repository on GitHub (Completed)
 
-1.  **GitHub Account**: You need a GitHub account.
-2.  **Streamlit Cloud Account**: Sign up at [share.streamlit.io](https://share.streamlit.io/) using your GitHub account.
+You have successfully pushed your code to:
+**https://github.com/YashhP2004/rice-disease-detection**
 
-## Step 1: Push Code to GitHub
+## Step 2: Push Code (Completed)
 
-You need to push your code to a GitHub repository. We have already prepared the project for **Git LFS** (Large File Storage) to handle the model file.
+The code and the large model file have been pushed to the remote repository.
 
-1.  **Commit your changes**:
-    ```bash
-    git add .
-    git commit -m "Prepare for deployment: Add dependencies and LFS tracking"
-    ```
+> **Update**: The model file was initially ignored. I have forced a push of the model file. If you already deployed, please **Reboot** your app.
 
-2.  **Create a new repository on GitHub**:
-    - Go to GitHub and create a new repository (e.g., `rice-disease-detection`).
-    - **Important**: Do *not* initialize with README, .gitignore, or License (since you already have them).
+## Step 3: Deploy on Streamlit Community Cloud (IMPORTANT)
 
-3.  **Push to GitHub**:
-    - Copy the remote URL from GitHub (e.g., `https://github.com/YOUR_USERNAME/rice-disease-detection.git`).
-    - Link your local folder to the remote repository and push:
-    ```bash
-    git remote add origin <YOUR_REPO_URL>
-    git branch -M main
-    git push -u origin main
-    ```
-    *(If you are already connected to a repo, just `git push`)*.
+**Do NOT check the "Deploy" button in your local app's toolbar.** It often fails to detect new repositories immediately.
 
-    > **Note**: The upload might take a moment due to the large model file (267MB).
+**Instead, follow these steps:**
 
-## Step 2: Deploy on Streamlit Community Cloud
-
-1.  Go to [share.streamlit.io](https://share.streamlit.io/).
-2.  Click **"New app"**.
-3.  Select your repository (`rice-disease-detection`), branch (`main`), and main file path (`app.py`).
-4.  Click **"Deploy!"**.
-
-## Step 3: Monitor Deployment
-
-- Streamlit will start building your app.
-- Watch the **"Manage app" -> "Logs"** section.
-- It will automatically install:
-    - Python libraries from `requirements.txt`
-    - System dependencies (like `libgl1`) from `packages.txt`
-- Once finished, your app will be live!
+1.  Open your browser and go to: **[share.streamlit.io](https://share.streamlit.io/)**
+2.  Log in with your GitHub account.
+3.  Click the **"New app"** button (top right).
+4.  **Use existing repo**:
+    - Select or Paste: `YashhP2004/rice-disease-detection`
+5.  **Branch**: `main`
+6.  **Main file path**: `app.py`
+7.  Click **"Deploy!"**.
 
 ## Troubleshooting
 
-- **"Model not found"**: Ensure Git LFS uploaded the actual `.h5` file and not just a pointer. You can check the file size on GitHub; it should be ~267MB.
+- **"Model not found"**: 
+    - This happens if the model file wasn't uploaded. I have just fixed this by forcing the upload. 
+    - **Fix**: Go to your app on share.streamlit.io -> Manage App -> **Reboot App**.
 - **"ModuleNotFoundError: No module named 'cv2'"**: This is handled by `packages.txt`. If it persists, ensure `opencv-python-headless` is in `requirements.txt` (it usually is safer for cloud environments than `opencv-python`).
+- **"Unable to deploy" (Local Toolbar)**: Ignore this error in your VS Code/Local browser. Use the website method above.

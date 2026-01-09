@@ -26,6 +26,10 @@ def main():
         layout="wide"
     )
 
+    # Inject Bot
+    from utils.bot import inject_bot
+    inject_bot()
+
     # Initialize Managers
     auth_manager = AuthManager()
     page_registry = PageRegistry()
