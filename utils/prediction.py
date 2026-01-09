@@ -32,6 +32,9 @@ except Exception as e:
 import numpy as np
 from PIL import Image
 
+import streamlit as st
+
+@st.cache_resource
 def load_model(model_path):
     """Loads the trained Keras model."""
     if not TF_AVAILABLE:
