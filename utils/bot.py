@@ -8,11 +8,15 @@ def inject_bot():
     # Reverting to "Inline/Embedded" mode because the "Bubble" script 
     # fails to render reliably inside Streamlit's iframe sandbox.
     # This ensures the chat interface is always visible in the sidebar.
+    # RESTORED: Inline/Embedded mode with v2.2 script.
+    # This is the ONLY configuration that guarantees the bot is visible and usable 
+    # within the Streamlit Sidebar iframe restrictions.
+    # Height is set to 550px to fit on standard screens without scrolling.
     custom_html = """
-    <!-- Script -->
-    <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js"></script>
+    <!-- Script (v2.2 is most stable for inline embedding) -->
+    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
     
-    <!-- Custom Styles to un-float the chat -->
+    <!-- Custom Styles to force the chat to fill the container -->
     <style>
       #webchat .bpWebchat {
         position: unset;
@@ -22,12 +26,12 @@ def inject_bot():
         max-width: 100%;
       }
       #webchat .bpFab {
-        display: none; /* Hide the floating button */
+        display: none;
       }
     </style>
 
-    <!-- Container -->
-    <div id="webchat" style="width: 100%; height: 600px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></div>
+    <!-- Container with Rounded Corners -->
+    <div id="webchat" style="width: 100%; height: 530px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></div>
 
     <!-- Initialization -->
     <script>
@@ -65,4 +69,4 @@ def inject_bot():
     </script>
     """
     
-    components.html(custom_html, height=620, scrolling=False)
+    components.html(custom_html, height=550, scrolling=False)
