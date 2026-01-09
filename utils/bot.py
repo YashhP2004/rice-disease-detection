@@ -12,6 +12,7 @@ def inject_bot():
     # Note: We use the hosted config.js based on the Bot ID as it ensures
     # the bot stays updated when the user changes settings in Botpress Studio.
     
-    # Render with 0 height/width so it doesn't take up layout space 
-    # but the script still runs (floating widget).
-    components.html(bot_code, height=0, width=0)
+    # Render with sufficient height so the widget is visible.
+    # Since Streamlit runs components in an iframe, the floating bubble 
+    # needs space within that iframe to appear.
+    components.html(bot_code, height=500, scrolling=False)
