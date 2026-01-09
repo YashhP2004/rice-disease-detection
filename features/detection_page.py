@@ -2,6 +2,8 @@ from features.base_page import BasePage
 import streamlit as st
 import os
 from utils.prediction import load_model, predict_image
+from utils.report import generate_pdf
+from PIL import Image
 
 class DetectionPage(BasePage):
     def __init__(self, model_path, class_names):
@@ -54,5 +56,25 @@ class DetectionPage(BasePage):
                             else:
                                 st.markdown(f"### ⚠️ Detected: {predicted_class}")
                                 st.markdown("Please consult an agricultural expert for treatment.")
+                            
+                            # PDF Report Generation
+                            st.markdown("---")
+                            st.write("### 📄 Report")
+                            
+                            # Convert uploaded file to PIL Image for the report generator
+                            # Seeking to 0 is important if the file has been read before
+                            uploaded_file.seek(0)
+                            image_pil = Image.open(uploaded_file)
+                            
+                            if st.button("Generate PDF Report"):
+                                with st.spinner("Generating PDF..."):
+                                    pdf_bytes = generate_pdf(image_pil, predicted_class, confidence)
+                                    
+                                    st.download_button(
+                                        label="⬇️ Download PDF Result",
+                                        data=pdf_bytes,
+                                        file_name="disease_report.pdf",
+                                        mime="application/pdf"
+                                    )
                         else:
                             st.error("Could not make a prediction. Please try another image.")
