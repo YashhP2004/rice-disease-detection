@@ -30,12 +30,7 @@ def main():
     auth_manager = AuthManager()
     page_registry = PageRegistry()
 
-    # Inject Bot in Sidebar (so it doesn't break main layout)
-    with st.sidebar:
-        st.markdown("---")
-        st.markdown("### 🤖 Agri Assistant")
-        from utils.bot import inject_bot
-        inject_bot()
+
 
     # Register Pages (Composition Root Configuration)
     page_registry.register("Home", HomePage())
@@ -67,6 +62,13 @@ def main():
     current_page = page_registry.get_page(app_mode)
     if current_page:
         current_page.render()
+
+    # Inject Bot in Sidebar (at the bottom)
+    with st.sidebar:
+        st.markdown("---")
+        st.markdown("### 🤖 Agri Assistant")
+        from utils.bot import inject_bot
+        inject_bot()
 
 if __name__ == "__main__":
     main()
