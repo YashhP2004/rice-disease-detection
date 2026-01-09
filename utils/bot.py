@@ -10,7 +10,7 @@ def inject_bot():
     # This ensures the chat interface is always visible in the sidebar.
     custom_html = """
     <!-- Script -->
-    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v3.5/inject.js"></script>
     
     <!-- Custom Styles to un-float the chat -->
     <style>
