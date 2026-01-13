@@ -18,7 +18,7 @@ class ReportGenerator(FPDF):
         # Page number
         self.cell(0, 10, 'Page ' + str(self.page_no()) + '/{nb}', 0, 0, 'C')
 
-def generate_pdf(image, prediction, confidence):
+def generate_pdf(image, prediction, confidence, details=None):
     """
     Generates a PDF report for the disease detection.
     
@@ -70,18 +70,50 @@ def generate_pdf(image, prediction, confidence):
     
     pdf.ln(10)
     
-    # General Advice Section
-    pdf.set_font('Arial', 'B', 14)
-    pdf.cell(0, 10, "Recommendation", 0, 1)
-    pdf.set_font('Arial', '', 12)
+    pdf.ln(10)
     
-    advice = ""
-    if prediction == 'Healthy':
-        advice = "The crop appears healthy. Continue with regular maintenance and monitoring."
-    else:
-        advice = f"The crop shows signs of {prediction}. It is recommended to consult with an agricultural expert for specific treatment options. Avoid excessive nitrogen application and monitor water levels."
+    # Detailed Analysis Section
+    if details:
+        # Symptoms
+        if 'symptoms' in details:
+            pdf.set_font('Arial', 'B', 14)
+            pdf.cell(0, 10, "Symptoms", 0, 1)
+            pdf.set_font('Arial', '', 11)
+            for symptom in details['symptoms']:
+                pdf.multi_cell(0, 7, f"- {symptom}")
+            pdf.ln(5)
+
+        # Cure
+        if 'cure' in details:
+            pdf.set_font('Arial', 'B', 14)
+            pdf.cell(0, 10, "Cure & Treatment", 0, 1)
+            pdf.set_font('Arial', '', 11)
+            for item in details['cure']:
+                pdf.multi_cell(0, 7, f"- {item}")
+            pdf.ln(5)
+
+        # Prevention
+        if 'prevention' in details:
+            pdf.set_font('Arial', 'B', 14)
+            pdf.cell(0, 10, "Prevention Tips", 0, 1)
+            pdf.set_font('Arial', '', 11)
+            for item in details['prevention']:
+                pdf.multi_cell(0, 7, f"- {item}")
+            pdf.ln(5)
+
+    # General Advice Section
+    if not details: # Fallback if no details
+        pdf.set_font('Arial', 'B', 14)
+        pdf.cell(0, 10, "Recommendation", 0, 1)
+        pdf.set_font('Arial', '', 12)
         
-    pdf.multi_cell(0, 10, advice)
+        advice = ""
+        if prediction == 'Healthy':
+            advice = "The crop appears healthy. Continue with regular maintenance and monitoring."
+        else:
+            advice = f"The crop shows signs of {prediction}. It is recommended to consult with an agricultural expert for specific treatment options. Avoid excessive nitrogen application and monitor water levels."
+            
+        pdf.multi_cell(0, 10, advice)
     
     pdf.ln(10)
     pdf.set_font('Arial', 'I', 10)

@@ -1,0 +1,112 @@
+{
+    "Bacterial_Leaf_Blight": {
+        "symptoms": [
+            "Water-soaked streaks on leaf blades that turn yellowish-white.",
+            "Lesions start from the leaf tip and extend down the margins.",
+            "In severe cases, leaves dry up and wilt (Kresek phase).",
+            "Milky bacterial ooze may appear on lesions in the morning."
+        ],
+        "cure": [
+            "Drain the field to reduce humidity.",
+            "Apply Copper Oxychloride or Streptocycline sprays.",
+            "Use biological control agents like Pseudomonas fluorescens."
+        ],
+        "prevention": [
+            "Use resistant rice varieties (e.g., IR20, TKM 6).",
+            "Avoid excessive nitrogen fertilization.",
+            "Maintain proper field sanitation and weed control.",
+            "Seed treatment with bleaching powder and zinc sulfate."
+        ]
+    },
+    "Brown_Spot": {
+        "symptoms": [
+            "Oval or circular dark brown spots with a yellow halo.",
+            "Spots are evenly distributed over the leaf surface.",
+            "Grain discoloration leads to poor quality.",
+            "Severe infection causes leaves to dry out and die."
+        ],
+        "cure": [
+            "Apply fungicides like Mancozeb or Carbendazim.",
+            "Spray Edifenphos or Chitosan as recommended.",
+            "Improve soil health with potassium and silicon amendments."
+        ],
+        "prevention": [
+            "Use pathogen-free seeds.",
+            "Treat seeds with hot water (53-54°C) for 10-12 minutes.",
+            "Apply balanced fertilizers; correct soil nutrient deficiencies (especially Silicon).",
+            "Remove alternate hosts and crop debris."
+        ]
+    },
+    "Leaf_Blast": {
+        "symptoms": [
+            "Diamond or spindle-shaped lesions with gray/white centers and brown margins.",
+            "Lesions can coalesce to kill the entire leaf.",
+            "Can affect nodes and necks (Node Blast / Neck Blast).",
+            "Stunted plant growth."
+        ],
+        "cure": [
+            "Spray Tricyclazole (Beam) or Isoprothiolane immediately upon symptom appearance.",
+            "Apply Kasugamycin or Edifenphos.",
+            "Maintain water level in the field."
+        ],
+        "prevention": [
+            "Plant resistant varieties.",
+            "Avoid late planting.",
+            "Balance nitrogen application; split nitrogen doses.",
+            "Burn infected straw and stubble."
+        ]
+    },
+    "Leaf_Scald": {
+        "symptoms": [
+            "Zonate lesions starting at leaf tips or margins.",
+            "Lesions appear water-soaked with alternating light and dark bands (scalded appearance).",
+            "Affected areas dry out and turn light brown.",
+            "Significant leaf area loss affecting photosynthesis."
+        ],
+        "cure": [
+            "Foliar spray of Carbendazim or Benomyl.",
+            "Apply Copper-based fungicides.",
+            "Manage field moisture levels."
+        ],
+        "prevention": [
+            "Use moderate nitrogen levels.",
+            "Maintain wider spacing between plants to lower humidity.",
+            "Clean seeds before planting.",
+            "Remove weed hosts from the field bunds."
+        ]
+    },
+    "Sheath_Blight": {
+        "symptoms": [
+            "Oval or irregular greenish-gray spots on the leaf sheath near the water line.",
+            "Lesions enlarge and coalesce, looking like a snake skin pattern.",
+            "Infection spreads upward to leaf blades.",
+            "Poor grain filling and lodging of plants."
+        ],
+        "cure": [
+            "Spray Hexaconazole or Propiconazole.",
+            "Apply Validamycin or Thifluzamide.",
+            "Drain water from the field for a few days."
+        ],
+        "prevention": [
+            "Avoid excessive seeding rate (dense planting).",
+            "Apply Nitrogen in split doses.",
+            "Destroy crop residues and weeds.",
+            "Treat seeds with Pseudomonas fluorescens."
+        ]
+    },
+    "Healthy": {
+        "symptoms": [
+            "Leaves are uniform green without spots or streaks.",
+            "Plants show vigorous growth and proper tillering.",
+            "No signs of wilting or discoloration."
+        ],
+        "cure": [
+            "N/A - Maintain current care practices."
+        ],
+        "prevention": [
+            "Continue following Good Agricultural Practices (GAP).",
+            "Monitor regularly for early signs of pests or diseases.",
+            "Ensure proper water and nutrient management."
+        ]
+    }
+}

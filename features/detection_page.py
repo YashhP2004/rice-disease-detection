@@ -3,7 +3,10 @@ import streamlit as st
 import os
 from utils.prediction import load_model, predict_image
 from utils.report import generate_pdf
+from utils.report import generate_pdf
 from PIL import Image
+import json
+from utils.login_styles import get_main_app_css # Re-using styling if needed
 
 class DetectionPage(BasePage):
     def __init__(self, model_path, class_names):
@@ -14,6 +17,14 @@ class DetectionPage(BasePage):
     def render(self):
         st.title("🔍 Disease Detection")
         st.write("Upload an image of a rice or pulse leaf to detect diseases.")
+        
+        # Load Disease Info
+        try:
+            with open('utils/disease_info.json', 'r') as f:
+                self.disease_info = json.load(f)
+        except Exception as e:
+            st.error(f"Error loading disease info: {e}")
+            self.disease_info = {}
 
         # Check if model exists
         if not os.path.exists(self.model_path):
@@ -74,9 +85,38 @@ class DetectionPage(BasePage):
                          st.balloons()
                          st.session_state.balloons_shown = uploaded_file.name
                     st.markdown("### ✅ The plant looks healthy!")
+                    st.info("Keep maintaining good agricultural practices.")
                 else:
                     st.markdown(f"### ⚠️ Detected: {predicted_class}")
                     st.markdown("Please consult an agricultural expert for treatment.")
+                
+                # --- Detailed Disease Info ---
+                if predicted_class in self.disease_info:
+                    info = self.disease_info[predicted_class]
+                    
+                    st.markdown("---")
+                    st.markdown("### 📋 Detailed Analysis")
+                    
+                    c1, c2, c3 = st.columns(3)
+                    
+                    with c1:
+                        with st.container():
+                            st.markdown("#### 🤒 Symptoms")
+                            for s in info.get('symptoms', []):
+                                st.markdown(f"- {s}")
+                                
+                    with c2:
+                        with st.container():
+                            st.markdown("#### 💊 Cure / Treatment")
+                            for c in info.get('cure', []):
+                                st.markdown(f"- {c}")
+
+                    with c3:
+                        with st.container():
+                            st.markdown("#### 🛡️ Prevention")
+                            for p in info.get('prevention', []):
+                                st.markdown(f"- {p}")
+                # -----------------------------
                 
                 # PDF Report Generation
                 st.markdown("---")
@@ -88,7 +128,11 @@ class DetectionPage(BasePage):
                 
                 # Direct download button (no intermediate "Generate" button needed)
                 # We generate the bytes on the fly for the current result
-                pdf_bytes = generate_pdf(image_pil, predicted_class, confidence)
+                # Direct download button (no intermediate "Generate" button needed)
+                # We generate the bytes on the fly for the current result
+                # Pass the detailed info to the report generator
+                details = self.disease_info.get(predicted_class, {})
+                pdf_bytes = generate_pdf(image_pil, predicted_class, confidence, details)
                 
                 st.download_button(
                     label="⬇️ Download PDF Result",
