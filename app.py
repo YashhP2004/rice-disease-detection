@@ -6,7 +6,7 @@ from features.detection_page import DetectionPage
 from features.about_page import AboutPage
 
 from features.page_registry import PageRegistry
-from utils.login_styles import get_login_css
+from utils.login_styles import get_login_css, get_main_app_css
 
 # Constants configuration
 MODEL_PATH = 'rice_leaf_disease_model.h5'
@@ -28,6 +28,9 @@ def main():
         layout="wide"
     )
 
+    # Inject Global Custom CSS (Theme)
+    st.markdown(get_main_app_css(), unsafe_allow_html=True)
+
     # Initialize Managers
     auth_manager = AuthManager()
     page_registry = PageRegistry()
@@ -41,7 +44,7 @@ def main():
 
     # Authentication Check
     if not auth_manager.is_logged_in():
-        # Inject Custom Login CSS
+        # Inject Login-Specific CSS (Glass Card Layout)
         st.markdown(get_login_css(), unsafe_allow_html=True)
         
         # Initialize auth mode state

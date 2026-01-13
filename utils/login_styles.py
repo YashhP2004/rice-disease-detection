@@ -1,4 +1,5 @@
-def get_login_css():
+def get_main_app_css():
+    """Returns CSS that should be applied globally to the app"""
     return """
     <style>
         /* Global Reset & Font */
@@ -6,14 +7,16 @@ def get_login_css():
         
         html, body, [class*="css"] {
             font-family: 'Inter', sans-serif;
+            color: #E0E0E0;
         }
 
-        /* Abstract Modern Background */
+        /* Abstract Modern Background - GLOBAL */
         .stApp {
             /* Sleek dark gradient background */
             background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
+            background-attachment: fixed;
         }
         
         @keyframes gradientBG {
@@ -22,21 +25,74 @@ def get_login_css():
             100% { background-position: 0% 50%; }
         }
 
-        /* Main Glass Card Container */
+        /* Sidebar Styling */
+        section[data-testid="stSidebar"] {
+            background: rgba(10, 10, 15, 0.7);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        section[data-testid="stSidebar"] h1, section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] label {
+            color: #ffffff !important;
+        }
+
+        /* Main Content Headings */
+        h1, h2, h3, h4, h5, h6 {
+            color: #FFFFFF !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        /* Markdown Text */
+        .stMarkdown, p, li {
+            color: #cccccc !important;
+            line-height: 1.6;
+        }
+
+        /* Hide Streamlit Header/Footer */
+        #MainMenu {visibility: hidden;}
+        header {visibility: hidden;}
+        footer {visibility: hidden;}
+
+        /* Global Button Styling */
+         .stButton > button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .stButton > button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(118, 75, 162, 0.4);
+        }
+    </style>
+    """
+
+def get_login_css():
+    """Returns CSS specifically for the login/signup page components"""
+    return """
+    <style>
+        /* Main Glass Card Container for Split View */
         div[data-testid="column"] {
-            background: rgba(18, 18, 18, 0.85); /* Darker for better contrast */
+            background: rgba(18, 18, 18, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            padding: 50px;
+            padding: 40px;
         }
 
         /* Left Column (Forms) */
         div[data-testid="column"]:nth-of-type(1) {
             border-top-left-radius: 20px;
             border-bottom-left-radius: 20px;
-            border-right: 1px solid rgba(255,255,255,0.05); /* Subtle separator */
+            border-right: 1px solid rgba(255,255,255,0.05);
         }
 
         /* Right Column (Branding) */
@@ -49,86 +105,19 @@ def get_login_css():
             justify-content: center;
         }
 
-        /* Typography */
-        h1, h2, h3 {
-            color: #FFFFFF !important;
-            font-weight: 700 !important;
-            letter-spacing: -0.5px;
-        }
-
-        p, label, .stMarkdown {
-            color: #A0A0A0 !important;
-            font-weight: 400;
-        }
-
-        /* Modern Input Fields */
+        /* Input Fields */
         .stTextInput > div > div > input {
-            background-color: #1E1E1E;
+            background-color: #121212;
             color: #E0E0E0;
             border: 1px solid #333;
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 12px 16px;
-            font-size: 14px;
-            transition: all 0.3s ease;
         }
 
         .stTextInput > div > div > input:focus {
-            border-color: #764ba2; /* Purple accent */
+            border-color: #764ba2;
             box-shadow: 0 0 0 2px rgba(118, 75, 162, 0.2);
-            background-color: #252525;
-        }
-
-        /* Primary Button (Login/Sign Up) */
-        .stButton > button {
-            width: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Modern Purple-Blue Gradient */
-            color: white;
-            border: none;
-            padding: 14px 0;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 15px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(118, 75, 162, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .stButton > button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(118, 75, 162, 0.6);
         }
         
-        .stButton > button:active {
-            transform: translateY(0px);
-        }
-        
-        /* Secondary Button behavior (Simulated via CSS targeting if possible, 
-           or just generalized since Streamlit buttons are same class. 
-           We'll make the "Don't have an account?" look distinct if we can, 
-           or keep them consistent but separated by spacing.
-           For now, the gradient style works well for the primary action. 
-           The 'type="secondary"' in Streamlit doesn't add a distinct class we can easily hook 
-           without :nth-child hacks, so we'll stick to a consistent premium button style.
-        */
-
-        /* Hide Default Streamlit Chrome */
-        #MainMenu {visibility: hidden;}
-        header {visibility: hidden;}
-        footer {visibility: hidden;}
-        
-        /* Alerts */
-        .stAlert {
-            background-color: rgba(255, 75, 75, 0.1);
-            border: 1px solid rgba(255, 75, 75, 0.2);
-            color: #ff4b4b;
-            border-radius: 10px;
-        }
-        
-        .stSuccess {
-            background-color: rgba(0, 200, 83, 0.1);
-            border: 1px solid rgba(0, 200, 83, 0.2);
-            color: #00c853;
-        }
-
     </style>
     """
