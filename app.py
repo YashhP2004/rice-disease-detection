@@ -4,6 +4,7 @@ from auth_manager import AuthManager
 from features.home_page import HomePage
 from features.detection_page import DetectionPage
 from features.about_page import AboutPage
+from features.history_page import HistoryPage
 
 from features.page_registry import PageRegistry
 from utils.login_styles import get_login_css, get_main_app_css
@@ -40,6 +41,7 @@ def main():
     # Register Pages (Composition Root Configuration)
     page_registry.register("Home", HomePage())
     page_registry.register("Disease Detection", DetectionPage(MODEL_PATH, CLASS_NAMES))
+    page_registry.register("History", HistoryPage())
     page_registry.register("About", AboutPage())
 
     # Authentication Check

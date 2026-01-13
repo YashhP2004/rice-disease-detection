@@ -7,12 +7,14 @@ from utils.report import generate_pdf
 from PIL import Image
 import json
 from utils.login_styles import get_main_app_css # Re-using styling if needed
+from utils.history_manager import HistoryManager
 
 class DetectionPage(BasePage):
     def __init__(self, model_path, class_names):
         super().__init__("Disease Detection")
         self.model_path = model_path
         self.class_names = class_names
+        self.history_manager = HistoryManager()
 
     def render(self):
         st.title("🔍 Disease Detection")
@@ -67,6 +69,16 @@ class DetectionPage(BasePage):
                                'class': predicted_class,
                                'confidence': confidence
                            }
+                           
+                           # Save to History
+                           if 'current_user' in st.session_state and st.session_state['current_user']:
+                               self.history_manager.save_prediction(
+                                   st.session_state['current_user'],
+                                   predicted_class,
+                                   confidence,
+                                   uploaded_file.name
+                               )
+                               
                         else:
                             st.error("Could not make a prediction. Please try another image.")
 
