@@ -4,7 +4,9 @@ from auth_manager import AuthManager
 from features.home_page import HomePage
 from features.detection_page import DetectionPage
 from features.about_page import AboutPage
+
 from features.page_registry import PageRegistry
+from utils.login_styles import get_login_css
 
 # Constants configuration
 MODEL_PATH = 'rice_leaf_disease_model.h5'
@@ -39,7 +41,10 @@ def main():
 
     # Authentication Check
     if not auth_manager.is_logged_in():
-        st.title("🔐 Login")
+        # Inject Custom Login CSS
+        st.markdown(get_login_css(), unsafe_allow_html=True)
+        
+        st.markdown("<h1>🔐 Login</h1>", unsafe_allow_html=True) # Use HTML for better styling control via CSS
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
         if st.button("Login"):
