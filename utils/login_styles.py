@@ -58,44 +58,9 @@ def get_main_app_css():
             line-height: 1.6;
         }
 
-        /* Header Styling Strategy: Transparent Header, Visible Toggle, Hidden Utilities */
-        
-        /* 1. Make the main header transparent and pass-through, but visible for layout */
-        header[data-testid="stHeader"] {
-            background-color: transparent !important;
-            visibility: visible !important;
-        }
-
-        /* 2. Hide the colored decoration line at the top */
-        div[data-testid="stDecoration"] {
-            visibility: hidden;
-            display: none;
-        }
-
-        /* 3. Hide the Main Menu (kebab) and Toolbar */
-        #MainMenu {visibility: hidden;}
-        [data-testid="stToolbar"] {visibility: hidden;}
-        footer {visibility: hidden;}
-        
-        /* 4. Style and Force-Show the Sidebar Toggle Button */
-        button[data-testid="stSidebarCollapsedControl"] {
-            visibility: visible !important;
-            display: block !important;
-            color: #ffffff !important;
-            background-color: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 0.5rem;
-            margin-top: 1rem;
-            margin-left: 1rem;
-            z-index: 100000; /* Ensure it sits on top */
-            transition: all 0.3s ease;
-        }
-        
-        button[data-testid="stSidebarCollapsedControl"]:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-        }
+        /* Header Customization Removed for Debugging */
+        /* Reverting to default Streamlit header to ensure toggle button is visible. */
+        /* Once visible, we can re-apply transparent styles carefully. */
 
         /* Global Button Styling */
          .stButton > button {
