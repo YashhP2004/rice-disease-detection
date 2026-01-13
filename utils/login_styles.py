@@ -58,10 +58,20 @@ def get_main_app_css():
             line-height: 1.6;
         }
 
-        /* Hide Streamlit Header/Footer */
+        /* Hide Streamlit Header/Footer but keep Sidebar Toggle */
         #MainMenu {visibility: hidden;}
         header {visibility: hidden;}
         footer {visibility: hidden;}
+        
+        /* Explicitly show the sidebar toggle button */
+        [data-testid="stSidebarCollapsedControl"] {
+            visibility: visible;
+            color: #ffffff !important;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 4px;
+            margin-top: 10px; /* Adjust positioning if needed */
+        }
 
         /* Global Button Styling */
          .stButton > button {
