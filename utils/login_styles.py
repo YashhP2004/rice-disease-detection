@@ -32,6 +32,14 @@ def get_main_app_css():
             border-right: 1px solid rgba(255, 255, 255, 0.05);
         }
         
+        /* Botpress Iframe Styling */
+        iframe[title="st.iframe"] {
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            background-color: rgba(20, 20, 25, 0.8) !important; /* Attempt to blend before load */
+        }
+        
         section[data-testid="stSidebar"] h1, section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] label {
             color: #ffffff !important;
         }

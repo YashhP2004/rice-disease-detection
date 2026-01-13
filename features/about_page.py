@@ -13,7 +13,7 @@ class AboutPage(BasePage):
         By analyzing images of leaves, the system predicts the type of disease affecting the plant based on a trained machine-learning model.
         
         ### Developed By
-        - [Your Name/Team Name]
+        - Yash Patil
         
         ### Tech Stack
         - **Python**
